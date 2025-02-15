@@ -1,13 +1,15 @@
 // app/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BarcodeScanner from './components/BarcodeScanner';
+import VConsole from 'vconsole';
+
 
 export default function Home() {
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [drugInfo, setDrugInfo] = useState<any>(null);
-
+ 
   // 处理扫描结果
   const handleScanSuccess = async (barcode: string) => {
     setScanResult(barcode);
@@ -22,6 +24,12 @@ export default function Home() {
     // }
     console.log(barcode,'barcode')
   };
+
+  useEffect(()=>{
+    const vConsole = new VConsole();
+    console.log(vConsole,'vConsole2222')
+  },[])
+
 
   return (
     <div className="container1">
