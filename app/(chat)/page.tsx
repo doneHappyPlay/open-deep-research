@@ -9,6 +9,7 @@ export default async function Page() {
   const id = generateUUID();
 
   const cookieStore = await cookies();
+  console.log(cookieStore,'cookieStore111')
   const modelIdFromCookie = cookieStore.get('model-id')?.value;
 
   const selectedModelId =

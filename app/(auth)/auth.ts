@@ -34,6 +34,7 @@ export const {
     Credentials({
       credentials: {},
       async authorize({ email, password }: any) {
+        console.log(email,'email123',password)
         // Handle anonymous access
         if (!email && !password) {
           return await createAnonymousUser();

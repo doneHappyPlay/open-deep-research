@@ -87,6 +87,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@arco-design/web-react": "^2.65.0",
     "@biomejs/biome": "1.9.4",
     "@tailwindcss/typography": "^0.5.15",
     "@types/d3-scale": "^4.0.8",
@@ -95,6 +96,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@zxing/browser": "^0.1.5",
+    "axios": "^1.7.9",
+    "babel-plugin-import": "^1.13.8",
     "drizzle-kit": "^0.25.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",

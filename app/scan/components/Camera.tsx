@@ -15,7 +15,7 @@ export const Camera = ({ onCapture }:{onCapture:(imageSrc:any)=>void}) => {
   };
 
   return (
-    <div>
+    <div className='relative'>
       <Webcam
         audio={false}
         ref={webcamRef}
@@ -24,11 +24,10 @@ export const Camera = ({ onCapture }:{onCapture:(imageSrc:any)=>void}) => {
       />
       <button 
         onClick={capture}
-        className="bg-blue-500 text-white p-2 mt-4 rounded"
+        className="bg-blue-500 text-white p-2 mt-4 absolute top-1/2 right-1/2 rounded-xl"
       >
         拍摄照片
       </button>
-      {imgSrc && <img src={imgSrc} alt="Captured" className="mt-4" />}
     </div>
   );
 };

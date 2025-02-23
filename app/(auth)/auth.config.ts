@@ -10,6 +10,7 @@ export const authConfig = {
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
+      console.log(auth?.user,'auth?.user123')
       const isLoggedIn = !!auth?.user;
       const isOnRegister = nextUrl.pathname.startsWith('/register');
       const isOnLogin = nextUrl.pathname.startsWith('/login');

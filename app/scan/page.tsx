@@ -1,56 +1,45 @@
-// app/page.tsx
-'use client';
-
-import { useEffect, useState } from 'react';
-import BarcodeScanner from './components/BarcodeScanner';
-import VConsole from 'vconsole';
-
+"use client"
+// pages/index.js
+import { useState } from 'react';
+import { Camera } from './components/Camera';
 
 export default function Home() {
-  const [scanResult, setScanResult] = useState<string | null>(null);
-  const [drugInfo, setDrugInfo] = useState<any>(null);
- 
-  // 处理扫描结果
-  const handleScanSuccess = async (barcode: string) => {
-    setScanResult(barcode);
-    
-    // 调用药品信息API（示例使用假API）
-    // try {
-    //   const response = await fetch(`/api/drug-info?code=${barcode}`);
-    //   const data = await response.json();
-    //   setDrugInfo(data);
-    // } catch (error) {
-    //   console.error('获取药品信息失败:', error);
-    // }
-    console.log(barcode,'barcode')
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCapture = async (imageData:any) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageData: imageData })
+      });
+      
+      const {data} = await response.json();
+      console.log(data,'data111')
+      setResults([data]);
+    } catch (error) {
+      console.error('识别失败:', error);
+    }
+    setIsLoading(false);
   };
 
-  useEffect(()=>{
-    const vConsole = new VConsole();
-    console.log(vConsole,'vConsole2222')
-  },[])
-
-
   return (
-    <div className="container1">
-      <h1>药品条码扫描</h1>
+    <div className="container mx-auto">
+      <Camera onCapture={handleCapture} />
       
-      {!scanResult ? (
-        <BarcodeScanner
-          onScanSuccess={handleScanSuccess}
-          onScanError={(error) => console.error('扫描错误:', error)}
-        />
-      ) : (
-        <div className="result-container">
-          <h2>扫描结果：{scanResult}</h2>
-          {drugInfo && (
-            <div className="drug-info">
-              <p>药品名称：{drugInfo.name}</p>
-              <p>生产厂商：{drugInfo.manufacturer}</p>
-              <p>批号：{drugInfo.batch_number}</p>
-            </div>
-          )}
-          <button onClick={() => setScanResult(null)}>重新扫描</button>
+      {isLoading && <p className="mt-4">识别中...</p>}
+      {results.length > 0 && (
+        <div className="mt-4">
+          <h2 className="text-xl mb-2">识别结果：</h2>
+          <ul className="space-y-2">
+            {results.map((item:any, index) => (
+              <li key={index} className="bg-gray-100 p-2 rounded">
+                {item.productName}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
